@@ -20,9 +20,27 @@ damages = ['Damages not recorded', '100M', 'Damages not recorded', '40M', '27.9M
 deaths = [90,4000,16,3103,179,184,408,682,5,1023,43,319,688,259,37,11,2068,269,318,107,65,19325,51,124,17,1836,125,87,45,133,603,138,3057,74]
 
 # write your update damages function here:
+def update_damages(damages):
+	new_damages = []
+	for index in range(len(damages)):
+		str_dmg = damages[index]
+		if str_dmg == "Damages not recorded":
+			new_damages.append("Damages not recorded")
+		elif "M" in str_dmg:
+			num_dmg = 1000000 * float(str_dmg[:-1])
+			new_damages.append(num_dmg)
+		elif "B" in str_dmg:
+			num_dmg = 1000000000 * float(str_dmg[:-1])
+			new_damages.append(num_dmg)
+		else:	# Else will not execute with the provided test data.
+			num_dmg = float(str_dmg[:-1])
+			new_damages.append(num_dmg)
+	
+	return new_damages
 
-
-
+print(damages)
+damages = update_damages(damages)
+print(damages)
 
 
 
