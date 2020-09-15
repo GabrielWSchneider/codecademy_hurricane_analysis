@@ -55,20 +55,20 @@ hurricanes_by_name = build_hurricanes_by_name(names, months, years, max_sustaine
 print(hurricanes_by_name)
 
 # write your construct hurricane by year dictionary function here:
-def build_hurricanes_by_year(hurricanes_by_name):
+def build_hurricanes_by_year(given_hurricanes):
 	years = []
-	for hurricane in hurricanes_by_name.values():
+	for hurricane in given_hurricanes.values():
 		if hurricane.get("Year") not in years:
 			years.append(hurricane.get("Year"))
 	
-	hurricanes = {}
+	hurricanes_by_year = {}
 	for current_year in years:
-		hurricanes[current_year] = []
-		for hurricane in hurricanes_by_name.values():
+		hurricanes_by_year[current_year] = []
+		for hurricane in given_hurricanes.values():
 			if hurricane.get("Year") == current_year:
-				hurricanes[current_year].append(hurricane)
+				hurricanes_by_year[current_year].append(hurricane)
 	
-	return hurricanes
+	return hurricanes_by_year
 
 hurricanes_by_year = build_hurricanes_by_year(hurricanes_by_name)
 
@@ -79,20 +79,41 @@ for key in hurricanes_by_year.keys():
 	print("\n")
 
 # write your count affected areas function here:
+def areas_affected_count(given_hurricanes):
+	areas = []
+	for hurricane in given_hurricanes.values():
+		for area in hurricane.get("Areas Affected"):
+			if area not in areas:
+				areas.append(area)
+	
+	times_area_was_affected = {}
+	for hurricane in given_hurricanes.values():
+		for affected_area in hurricane.get("Areas Affected"):
+			if affected_area not in times_area_was_affected:
+				times_area_was_affected[affected_area] = 0
+			times_area_was_affected[affected_area] += 1
+	
+	return times_area_was_affected
 
+affected_area_dict = areas_affected_count(hurricanes_by_name)
 
-
-
-
-
+for key, value in affected_area_dict.items():
+	print(f"{key} was affected by {value} hurricane(s).")
 
 # write your find most affected area function here:
+def get_most_affected_area(area_dict):
+	most_affected_area = ()
+	
+	for item in area_dict.items():
+		if most_affected_area == ():
+			most_affected_area = item
+		elif item[1] > most_affected_area[1]:
+			most_affected_area = item
+	
+	return most_affected_area
 
-
-
-
-
-
+most_affected_area = get_most_affected_area(affected_area_dict)
+print("\nThe area affected by the greatest number of hurricanes is {0}, with {1} hurricanes.".format(most_affected_area[0], most_affected_area[1]))
 
 # write your greatest number of deaths function here:
 
