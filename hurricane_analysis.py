@@ -40,29 +40,43 @@ def update_damages(damages):
 
 print("Damages:", damages, "\n")
 
-damages = update_damages(damages)
+numeric_damages = update_damages(damages)
 print("Updated Damages:", damages, "\n")
 
 # write your construct hurricane dictionary function here:
-def construct_hurricanes(names, months, years, max_sustained_winds, areas_affected, damages, deaths):
+def build_hurricanes_by_name(names, months, years, max_winds, areas, dmg_counts, death_counts):
 	hurricanes = {}
 	for i in range(len(names)):
-		hurricanes[names[i]] = {names[i] : {"Name": names[i], "Month": months[i], "Year": years[i], "Max Sustained Wind": max_sustained_winds[i], "Areas Affected": areas_affected[i], "Damages": damages[i], "Deaths": deaths[i]}}
+		hurricanes[names[i]] = {"Name": names[i], "Month": months[i], "Year": years[i], "Max Sustained Wind": max_winds[i], "Areas Affected": areas[i], "Damages": dmg_counts[i], "Deaths": death_counts[i]}
 	
 	return hurricanes
 
-hurricanes = construct_hurricanes(names, months, years, max_sustained_winds, areas_affected, damages, deaths)
-
-for index in hurricanes:
-	print(hurricanes[index], "\n")
+hurricanes_by_name = build_hurricanes_by_name(names, months, years, max_sustained_winds, areas_affected, numeric_damages, deaths)
+print(hurricanes_by_name)
 
 # write your construct hurricane by year dictionary function here:
+def build_hurricanes_by_year(hurricanes_by_name):
+	years = []
+	for hurricane in hurricanes_by_name.values():
+		if hurricane.get("Year") not in years:
+			years.append(hurricane.get("Year"))
+	
+	hurricanes = {}
+	for current_year in years:
+		hurricanes[current_year] = []
+		for hurricane in hurricanes_by_name.values():
+			if hurricane.get("Year") == current_year:
+				hurricanes[current_year].append(hurricane)
+	
+	return hurricanes
 
+hurricanes_by_year = build_hurricanes_by_year(hurricanes_by_name)
 
-
-
-
-
+for key in hurricanes_by_year.keys():
+	print(f"In the year {key}, the following hurricanes occurred:")
+	for hurricane in hurricanes_by_year.get(key):
+		print(f"  {hurricane}")
+	print("\n")
 
 # write your count affected areas function here:
 
