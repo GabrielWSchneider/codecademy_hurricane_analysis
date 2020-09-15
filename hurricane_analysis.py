@@ -27,10 +27,10 @@ def update_damages(damages):
 		if str_dmg == "Damages not recorded":
 			new_damages.append("Damages not recorded")
 		elif "M" in str_dmg:
-			num_dmg = 1000000 * float(str_dmg[:-1])
+			num_dmg = 10 ** 6 * float(str_dmg[:-1])
 			new_damages.append(num_dmg)
 		elif "B" in str_dmg:
-			num_dmg = 1000000000 * float(str_dmg[:-1])
+			num_dmg = 10 ** 9 * float(str_dmg[:-1])
 			new_damages.append(num_dmg)
 		else:	# Else will not execute with the provided test data.
 			num_dmg = float(str_dmg[:-1])
@@ -38,20 +38,23 @@ def update_damages(damages):
 	
 	return new_damages
 
-print(damages)
+print("Damages:", damages, "\n")
+
 damages = update_damages(damages)
-print(damages)
-
-
-
+print("Updated Damages:", damages, "\n")
 
 # write your construct hurricane dictionary function here:
+def construct_hurricanes(names, months, years, max_sustained_winds, areas_affected, damages, deaths):
+	hurricanes = {}
+	for i in range(len(names)):
+		hurricanes[names[i]] = {names[i] : {"Name": names[i], "Month": months[i], "Year": years[i], "Max Sustained Wind": max_sustained_winds[i], "Areas Affected": areas_affected[i], "Damages": damages[i], "Deaths": deaths[i]}}
+	
+	return hurricanes
 
+hurricanes = construct_hurricanes(names, months, years, max_sustained_winds, areas_affected, damages, deaths)
 
-
-
-
-
+for index in hurricanes:
+	print(hurricanes[index], "\n")
 
 # write your construct hurricane by year dictionary function here:
 
