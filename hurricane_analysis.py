@@ -71,7 +71,6 @@ def build_hurricanes_by_year(given_hurricanes):
 	return hurricanes_by_year
 
 hurricanes_by_year = build_hurricanes_by_year(hurricanes_by_name)
-
 for key in hurricanes_by_year.keys():
 	print(f"In the year {key}, the following hurricanes occurred:")
 	for hurricane in hurricanes_by_year.get(key):
@@ -96,7 +95,6 @@ def areas_affected_count(given_hurricanes):
 	return times_area_was_affected
 
 affected_area_dict = areas_affected_count(hurricanes_by_name)
-
 for key, value in affected_area_dict.items():
 	print(f"{key} was affected by {value} hurricane(s).")
 
@@ -105,9 +103,7 @@ def get_most_affected_area(area_dict):
 	most_affected_area = ()
 	
 	for item in area_dict.items():
-		if most_affected_area == ():
-			most_affected_area = item
-		elif item[1] > most_affected_area[1]:
+		if most_affected_area == () or item[1] > most_affected_area[1]:
 			most_affected_area = item
 	
 	return most_affected_area
@@ -116,20 +112,45 @@ most_affected_area = get_most_affected_area(affected_area_dict)
 print("\nThe area affected by the greatest number of hurricanes is {0}, with {1} hurricanes.".format(most_affected_area[0], most_affected_area[1]))
 
 # write your greatest number of deaths function here:
+def get_deadliest_hurricane(given_hurricanes):
+	deadliest_hurricane = ()
+	
+	for hurricane in given_hurricanes.values():
+		if deadliest_hurricane == () or hurricane.get("Deaths") > deadliest_hurricane[1]:
+			deadliest_hurricane = (hurricane.get("Name"), hurricane.get("Deaths"))
+	
+	return deadliest_hurricane
 
+deadliest_hurricane = get_deadliest_hurricane(hurricanes_by_name)
+print("\nThe deadliest hurricane is {0}, with {1} deaths.".format(deadliest_hurricane[0], deadliest_hurricane[1]))
 
+# write your categorize by mortality function here:
+def build_hurricanes_by_mortality(given_hurricanes):
+	hurricanes_by_mortality = {num: [] for num in range(5 + 1)}
+	
+	for hurricane in given_hurricanes.values():
+		if hurricane.get("Deaths") == 0:
+			key = 0
+		elif hurricane.get("Deaths") in range(1, 100 + 1):
+			key = 1
+		elif hurricane.get("Deaths") in range(101, 500 + 1):
+			key = 2
+		elif hurricane.get("Deaths") in range(501, 1000 + 1):
+			key = 3
+		elif hurricane.get("Deaths") in range(1001, 10000 + 1):
+			key = 4
+		else:
+			key = 5
+		
+		hurricanes_by_mortality[key].append(hurricane)
+	
+	return hurricanes_by_mortality
 
-
-
-
-
-# write your catgeorize by mortality function here:
-
-
-
-
-
-
+hurricanes_by_mortality = build_hurricanes_by_mortality(hurricanes_by_name)
+for key, value in hurricanes_by_mortality.items():
+	print(f"\nMortality rating {key} hurricanes are as follows:")
+	for listed_item in value:
+		print("--", listed_item)
 
 # write your greatest damage function here:
 
